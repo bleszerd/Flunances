@@ -15,11 +15,11 @@ The smart finance app to keep your records stats and keep track of your wallet.
 ![App screenshot 1](https://cdn.dribbble.com/users/1615584/screenshots/16728853/media/bbf87eb358cd2811ac03e2f005188027.jpg?compress=1&resize=1000x750&vertical=top "App screenshot 1")
 ![App screenshot 2](https://cdn.dribbble.com/users/1615584/screenshots/16728853/media/9b4ecd00d1ec6c2003332c0c889d7c1a.jpg?compress=1&resize=1200x900&vertical=top "App screenshot 2")
 
-    **TO:DO**
-    * Flunances backend application
-    * Build Documentation
+**TO:DO**
+* Flunances backend application
+* Build Documentation
 
-    **COMMING SOON**
-    * Flunances API gateway
-    * Windows/Web support
-        * Responsive design
+**COMMING SOON**
+* Flunances API gateway
+* Windows/Web support
+    * Responsive design
