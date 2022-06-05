@@ -19,7 +19,7 @@ class HeroHeader extends StatelessWidget {
         Padding(
           padding: EdgeInsets.fromLTRB(40, 0, 40, 32),
           child: Text(
-            "Our smart finance app will keep you records stats and track",
+            "The smart finance app to keep your records stats and keep track of your wallet.",
             style: TextStyle(
               color: AppColors.textPrimary,
               height: 1.5,

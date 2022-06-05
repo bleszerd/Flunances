@@ -18,7 +18,7 @@ class FlunancesApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/": (context) => const LandingPage(),
+        "/": (context) => LandingPage(),
       },
     );
   }

@@ -8,7 +8,7 @@ class HeroImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       transform: Transform.translate(
-        offset: const Offset(0, 50),
+        offset: const Offset(0, 115),
       ).transform,
       alignment: Alignment.bottomRight,
       decoration: const BoxDecoration(),

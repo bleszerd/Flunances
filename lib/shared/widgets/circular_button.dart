@@ -1,40 +1,43 @@
+import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CircularButton extends StatelessWidget {
+  final Color rippleColor;
+  final Color bgColor;
+  final double size;
+  final double iconSize;
   final VoidCallback onTap;
-  final Color splashColor;
-  final double splashOpacity;
-  final Alignment alignment;
-  final Color backgroundColor;
-  final Icon icon;
 
   const CircularButton({
     Key? key,
+    required this.rippleColor,
+    required this.bgColor,
+    required this.size,
+    required this.iconSize,
     required this.onTap,
-    required this.icon,
-    required this.backgroundColor,
-    this.splashColor = Colors.white,
-    this.splashOpacity = 1,
-    this.alignment = Alignment.center,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double size = MediaQuery.of(context).size.longestSide;
-
-    return Container(
-      alignment: alignment,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(size),
-        splashColor: splashColor.withOpacity(splashOpacity),
-        child: Ink(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(size),
-            color: backgroundColor,
+    return Card(
+      color: Colors.transparent,
+      shadowColor: Colors.transparent,
+      child: Ink(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(360),
+          color: AppColors.primarySwatch,
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(360),
+          overlayColor: MaterialStateProperty.all(rippleColor),
+          onTap: onTap,
+          child: Icon(
+            Icons.arrow_forward_rounded,
+            size: iconSize,
+            color: AppColors.surfaceFocused,
           ),
-          child: icon,
         ),
       ),
     );

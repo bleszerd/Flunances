@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/shared/widgets/circular_button.dart';
+import 'package:flunances/views/authentication_page/authentication_page.dart';
+import 'package:flunances/views/landing_page/components/fade_animated_page_transition.dart';
 import 'package:flunances/views/landing_page/components/hero_header.dart';
 import 'package:flunances/views/landing_page/components/hero_image.dart';
 import 'package:flutter/material.dart';
@@ -12,54 +17,131 @@ class LandingPage extends StatefulWidget {
   State<LandingPage> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _LandingPageState extends State<LandingPage>
+    with TickerProviderStateMixin {
+  late AnimationController scaleController;
+  late AnimationController arrowOpacityController;
+
+  late Animation<double> scaleAnimation;
+  late Animation<double> arrowOpacityAnimation;
+
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: AppColors.surface,
-    ));
     super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ));
+
+    scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            Navigator.push(
+              context,
+              FadeAnimatedPageTransition(
+                route: const AuthenticationPage(),
+                page: Container(),
+              ),
+            );
+            Timer(
+              const Duration(milliseconds: 300),
+              () {
+                scaleController.reset();
+              },
+            );
+          }
+        },
+      );
+
+    arrowOpacityController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            Timer(
+              const Duration(milliseconds: 800),
+              () {
+                arrowOpacityController.reset();
+              },
+            );
+          }
+        },
+      );
+
+    scaleAnimation = Tween<double>(begin: 1.0, end: 30.0).animate(
+      CurvedAnimation(
+        parent: scaleController,
+        curve: Curves.easeInOutQuart,
+      ),
+    );
+    arrowOpacityAnimation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(arrowOpacityController);
   }
 
   @override
   Widget build(BuildContext context) {
-    MaterialStateProperty<Color> materialStateColorTransparent =
-        MaterialStateProperty.all(Colors.transparent);
-
-    ButtonStyle buttonStyle = ButtonStyle(
-      backgroundColor: materialStateColorTransparent,
-      shadowColor: materialStateColorTransparent,
-      overlayColor: materialStateColorTransparent,
-      foregroundColor: materialStateColorTransparent,
-      surfaceTintColor: materialStateColorTransparent,
-    );
-
     return Scaffold(
       backgroundColor: AppColors.surface,
       body: SafeArea(
-        child: Expanded(
-          child: Stack(
-            children: [
-              const HeroHeader(),
-              const HeroImage(),
-              ElevatedButton(
-                onPressed: () {},
-                style: buttonStyle,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-                  child: CircularButton(
-                    alignment: Alignment.bottomCenter,
-                    backgroundColor: AppColors.primarySwatch,
-                    icon: const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: AppColors.surfaceFocused,
-                    ),
-                    onTap: () {},
+        child: Stack(
+          children: [
+            Column(
+              children: const [
+                HeroHeader(),
+                HeroImage(),
+              ],
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.only(bottom: 0),
+              child: AvatarGlow(
+                glowColor: AppColors.primarySwatch,
+                endRadius: 120,
+                repeatPauseDuration: const Duration(seconds: 2),
+                duration: const Duration(milliseconds: 2000),
+                child: AnimatedBuilder(
+                  animation: scaleAnimation,
+                  builder: (context, child) => Stack(
+                    children: [
+                      Transform.scale(
+                        scale: scaleAnimation.value,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.primarySwatch,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          width: 60,
+                          height: 60,
+                          margin: const EdgeInsets.only(left: 5, top: 5),
+                        ),
+                      ),
+                      AnimatedBuilder(
+                          animation: arrowOpacityAnimation,
+                          builder: (context, child) => Opacity(
+                                opacity: arrowOpacityAnimation.value,
+                                child: CircularButton(
+                                  onTap: () {
+                                    scaleController.forward();
+                                    arrowOpacityController.forward();
+                                  },
+                                  iconSize: 30,
+                                  size: 64,
+                                  rippleColor: AppColors.brilhantPrimarySwatch
+                                      .withOpacity(.3),
+                                  bgColor: Colors.transparent,
+                                ),
+                              )),
+                    ],
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
