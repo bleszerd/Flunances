@@ -19,10 +19,10 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
-  late AnimationController scaleController;
+  late AnimationController buttonScaleController;
   late AnimationController arrowOpacityController;
 
-  late Animation<double> scaleAnimation;
+  late Animation<double> buttonScaleAnimation;
   late Animation<double> arrowOpacityAnimation;
 
   @override
@@ -34,7 +34,7 @@ class _LandingPageState extends State<LandingPage>
       statusBarIconBrightness: Brightness.light,
     ));
 
-    scaleController = AnimationController(
+    buttonScaleController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     )..addStatusListener(
@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage>
             Timer(
               const Duration(milliseconds: 300),
               () {
-                scaleController.reset();
+                buttonScaleController.reset();
               },
             );
           }
@@ -73,9 +73,9 @@ class _LandingPageState extends State<LandingPage>
         },
       );
 
-    scaleAnimation = Tween<double>(begin: 1.0, end: 30.0).animate(
+    buttonScaleAnimation = Tween<double>(begin: 1.0, end: 30.0).animate(
       CurvedAnimation(
-        parent: scaleController,
+        parent: buttonScaleController,
         curve: Curves.easeInOutQuart,
       ),
     );
@@ -98,18 +98,17 @@ class _LandingPageState extends State<LandingPage>
             ),
             Container(
               alignment: Alignment.bottomCenter,
-              padding: const EdgeInsets.only(bottom: 0),
               child: AvatarGlow(
                 glowColor: AppColors.primarySwatch,
                 endRadius: 120,
                 repeatPauseDuration: const Duration(seconds: 2),
                 duration: const Duration(milliseconds: 2000),
                 child: AnimatedBuilder(
-                  animation: scaleAnimation,
+                  animation: buttonScaleAnimation,
                   builder: (context, child) => Stack(
                     children: [
                       Transform.scale(
-                        scale: scaleAnimation.value,
+                        scale: buttonScaleAnimation.value,
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.primarySwatch,
@@ -121,21 +120,22 @@ class _LandingPageState extends State<LandingPage>
                         ),
                       ),
                       AnimatedBuilder(
-                          animation: arrowOpacityAnimation,
-                          builder: (context, child) => Opacity(
-                                opacity: arrowOpacityAnimation.value,
-                                child: CircularButton(
-                                  onTap: () {
-                                    scaleController.forward();
-                                    arrowOpacityController.forward();
-                                  },
-                                  iconSize: 30,
-                                  size: 64,
-                                  rippleColor: AppColors.brilhantPrimarySwatch
-                                      .withOpacity(.3),
-                                  bgColor: Colors.transparent,
-                                ),
-                              )),
+                        animation: arrowOpacityAnimation,
+                        builder: (context, child) => Opacity(
+                          opacity: arrowOpacityAnimation.value,
+                          child: CircularButton(
+                            onTap: () {
+                              buttonScaleController.forward();
+                              arrowOpacityController.forward();
+                            },
+                            iconSize: 30,
+                            size: 64,
+                            rippleColor:
+                                AppColors.brilhantPrimarySwatch.withOpacity(.3),
+                            bgColor: Colors.transparent,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

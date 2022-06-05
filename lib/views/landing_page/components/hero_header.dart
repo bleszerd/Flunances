@@ -9,16 +9,16 @@ class HeroHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Padding(
-          padding: EdgeInsets.fromLTRB(40, 80, 40, 32),
-          child: HeroText(),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(40, 0, 40, 32),
-          child: Text(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(40, 80, 40, 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          HeroText(),
+          SizedBox(
+            height: 32,
+          ),
+          Text(
             "The smart finance app to keep your records stats and keep track of your wallet.",
             style: TextStyle(
               color: AppColors.textPrimary,
@@ -26,8 +26,8 @@ class HeroHeader extends StatelessWidget {
               fontSize: AppFontSize.normal,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

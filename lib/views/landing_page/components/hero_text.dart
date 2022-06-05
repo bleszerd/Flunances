@@ -1,6 +1,6 @@
 import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/shared/theme/font_size.dart';
-import 'package:flunances/views/landing_page/widgets/gradient_text.dart';
+import 'package:flunances/shared/widgets/gradient_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class HeroText extends StatelessWidget {

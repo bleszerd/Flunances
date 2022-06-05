@@ -1,3 +1,4 @@
+import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/views/landing_page/landing_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class FlunancesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.surface,
         fontFamily: 'Brasley',
         primarySwatch: Colors.blue,
       ),
