@@ -20,4 +20,8 @@ extension ColorExtension on Color {
     }
     return MaterialColor(value, swatch);
   }
+
+  MaterialStateProperty<Color> toMaterialProperty() {
+    return MaterialStateProperty.all(this);
+  }
 }

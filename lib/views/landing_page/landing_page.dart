@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flunances/shared/theme/app_colors.dart';
+import 'package:flunances/shared/widgets/app_input/app_input.dart';
+import 'package:flunances/shared/widgets/app_input/app_input_controller.dart';
 import 'package:flunances/shared/widgets/circular_button.dart';
 import 'package:flunances/views/authentication_page/authentication_page.dart';
-import 'package:flunances/views/landing_page/components/fade_animated_page_transition.dart';
+import 'package:flunances/shared/widgets/fade_animated_page_transition.dart';
 import 'package:flunances/views/landing_page/components/hero_header.dart';
 import 'package:flunances/views/landing_page/components/hero_image.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/shared/theme/font_size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PageHeaderTitle extends StatelessWidget {
-  const PageHeaderTitle({Key? key}) : super(key: key);
+  final bool showOptions;
+  final bool showProfilePicture;
+  final String title;
+
+  const PageHeaderTitle({
+    Key? key,
+    this.showOptions = true,
+    this.showProfilePicture = true,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,56 +44,62 @@ class PageHeaderTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: AppColors.surfaceFocused,
-            ),
-          ),
+          showOptions
+              ? IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    "drawable/icons/header_option_icon.svg",
+                    color: AppColors.white,
+                    width: 20,
+                    height: 20,
+                  ),
+                )
+              : Container(),
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 8),
-            child: const Text(
-              "Let's start",
-              style: TextStyle(
+            child: Text(
+              title,
+              style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.bold,
                 fontSize: AppFontSize.title,
               ),
             ),
           ),
-          Container(
-            width: 50,
-            height: 50,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              gradient: borderImageGradient,
-            ),
-            child: Container(
-              width: 49,
-              height: 49,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: AppColors.surface,
-              ),
-              padding: const EdgeInsets.all(4),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: ShaderMask(
-                  blendMode: BlendMode.color,
-                  shaderCallback: (bounds) => profileImageGradient.createShader(
-                    Rect.fromLTRB(0, 0, bounds.width, bounds.height),
+          showProfilePicture
+              ? Container(
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: borderImageGradient,
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: "https://github.com/bleszerd.png",
+                  child: Container(
+                    width: 49,
+                    height: 49,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: AppColors.surface,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: ShaderMask(
+                        blendMode: BlendMode.color,
+                        shaderCallback: (bounds) =>
+                            profileImageGradient.createShader(
+                          Rect.fromLTRB(0, 0, bounds.width, bounds.height),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: "https://github.com/bleszerd.png",
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          )
+                )
+              : Container()
         ],
       ),
     );

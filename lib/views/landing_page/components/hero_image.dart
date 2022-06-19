@@ -13,7 +13,7 @@ class HeroImage extends StatelessWidget {
       alignment: Alignment.bottomRight,
       decoration: const BoxDecoration(),
       child: SvgPicture.asset(
-        "images/hero_landing_image.svg",
+        "drawable/images/hero_landing_image.svg",
         semanticsLabel: 'Hero decoration image',
         width: 280,
       ),

@@ -13,14 +13,13 @@ class FlunancesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Flunances',
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.surface,
         fontFamily: 'Brasley',
-        primarySwatch: Colors.blue,
       ),
       routes: {
-        "/": (context) => LandingPage(),
+        "/": (context) => const LandingPage(),
       },
     );
   }

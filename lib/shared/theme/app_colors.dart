@@ -10,6 +10,11 @@ abstract class AppColors {
   static const surface = Color.fromRGBO(42, 42, 42, 1);
   static const surfaceFocused = Color.fromRGBO(61, 61, 61, 1);
 
+  static const white = Color.fromRGBO(255, 255, 255, 1);
+
+  static const error = Color.fromRGBO(255, 94, 71, 1);
+  static const success = Color.fromRGBO(71, 185, 138, 1);
+
   static const textPrimary = Color.fromRGBO(255, 255, 255, 1);
   static const textSecondary = Color.fromRGBO(149, 149, 149, 1);
 }
