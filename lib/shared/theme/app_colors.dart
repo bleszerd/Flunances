@@ -6,6 +6,8 @@ abstract class AppColors {
 
   static const brilhantPrimarySwatch = Color.fromRGBO(145, 211, 237, 1);
   static const brilhantSecondarySwatch = Color.fromRGBO(255, 128, 203, 1);
+  static const brilhantSecondarySwatchFocused =
+      Color.fromRGBO(255, 128, 100, 1);
 
   static const surface = Color.fromRGBO(42, 42, 42, 1);
   static const surfaceFocused = Color.fromRGBO(61, 61, 61, 1);
@@ -17,4 +19,6 @@ abstract class AppColors {
 
   static const textPrimary = Color.fromRGBO(255, 255, 255, 1);
   static const textSecondary = Color.fromRGBO(149, 149, 149, 1);
+
+  static const shadowSoft = Color.fromRGBO(0, 0, 0, .3);
 }

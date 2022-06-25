@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flunances/shared/theme/app_colors.dart';
-import 'package:flunances/shared/widgets/app_input/app_input.dart';
-import 'package:flunances/shared/widgets/app_input/app_input_controller.dart';
 import 'package:flunances/shared/widgets/circular_button.dart';
 import 'package:flunances/views/authentication_page/authentication_page.dart';
 import 'package:flunances/shared/widgets/fade_animated_page_transition.dart';
@@ -89,6 +87,7 @@ class _LandingPageState extends State<LandingPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surface,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [

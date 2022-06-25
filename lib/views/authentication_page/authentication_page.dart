@@ -1,6 +1,7 @@
 import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/shared/widgets/page_header_title.dart';
 import 'package:flunances/views/authentication_page/components/sign_in_area.dart';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -13,13 +14,24 @@ class AuthenticationPage extends StatefulWidget {
 
 class _AuthenticationPageState extends State<AuthenticationPage>
     with TickerProviderStateMixin {
+  //Open page animation
   late AnimationController opacityController;
-
   late Animation<double> opacityAnimation;
-  bool animationComplete = false;
+  bool openAnimationComplete = false;
+
+  //Background animation
+  final Color topColor = AppColors.brilhantPrimarySwatch;
+  final Color bottomColor = AppColors.brilhantSecondarySwatch;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
+    configureOpenPageAnimation();
+    configureBackgroundAnimation();
+  }
+
+  void configureOpenPageAnimation() {
     opacityController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 750),
@@ -32,20 +44,34 @@ class _AuthenticationPageState extends State<AuthenticationPage>
       ),
     )..addListener(() {
         if (opacityAnimation.isCompleted) {
-          animationComplete = true;
+          openAnimationComplete = true;
         }
       });
 
     opacityController.forward();
+  }
 
+  void configureBackgroundAnimation() {}
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(
         animation: opacityAnimation,
-        builder: (context, child) => Stack(
-          children: [
-            SafeArea(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+        builder: (context, child) => Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.surfaceFocused,
+                AppColors.surface,
+              ],
+            ),
+          ),
+          child: Stack(
+            children: [
+              SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
@@ -60,16 +86,16 @@ class _AuthenticationPageState extends State<AuthenticationPage>
                   ],
                 ),
               ),
-            ),
-            !animationComplete
-                ? Opacity(
-                    opacity: opacityAnimation.value,
-                    child: Container(
-                      color: AppColors.primarySwatch,
-                    ),
-                  )
-                : Container(),
-          ],
+              !openAnimationComplete
+                  ? Opacity(
+                      opacity: opacityAnimation.value,
+                      child: Container(
+                        color: AppColors.primarySwatch,
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );

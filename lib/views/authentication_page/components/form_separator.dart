@@ -16,6 +16,8 @@ class FormSeparator extends StatelessWidget {
         return 26;
       case SeparatorSize.FAR:
         return 56;
+      case SeparatorSize.FURTHER:
+        return 68;
       case SeparatorSize.AWAY:
         return 128;
     }
@@ -34,4 +36,5 @@ enum SeparatorSize {
   NORMAL,
   FAR,
   AWAY,
+  FURTHER,
 }

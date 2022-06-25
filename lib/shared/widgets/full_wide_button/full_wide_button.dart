@@ -26,7 +26,7 @@ class _FullWideButtonState extends State<FullWideButton> {
           ),
           child: RawMaterialButton(
             elevation: 26,
-            splashColor: AppColors.brilhantSecondarySwatch.withBlue(100),
+            splashColor: AppColors.brilhantSecondarySwatchFocused,
             fillColor: AppColors.brilhantSecondarySwatch,
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
