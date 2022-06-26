@@ -2,7 +2,13 @@ import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/views/landing_page/landing_page.dart';
 import 'package:flutter/material.dart';
 
+void configureApp() {
+  Paint.enableDithering = true;
+}
+
 void main() {
+  configureApp();
+
   runApp(const FlunancesApp());
 }
 

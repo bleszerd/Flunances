@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flunances/shared/widgets/page_header_title.dart';
 import 'package:flunances/views/authentication_page/components/sign_in_area.dart';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,12 @@ class _AuthenticationPageState extends State<AuthenticationPage>
   bool openAnimationComplete = false;
 
   //Background animation
-  final Color topColor = AppColors.brilhantPrimarySwatch;
-  final Color bottomColor = AppColors.brilhantSecondarySwatch;
+  List<Color> backgroundColors = [
+    AppColors.surface,
+    AppColors.surfaceFocused,
+  ];
+  int animationIndex = 0;
+  double animationRange = 0;
 
   @override
   void initState() {
@@ -51,21 +56,52 @@ class _AuthenticationPageState extends State<AuthenticationPage>
     opacityController.forward();
   }
 
-  void configureBackgroundAnimation() {}
+  void configureBackgroundAnimation() {
+    void updateState() {
+      setState(() {
+        animationIndex += 1;
+      });
+    }
+
+    // First build
+    Future.delayed(const Duration(seconds: 0), () {
+      updateState();
+    });
+
+    Timer.periodic(
+      const Duration(seconds: 4),
+      (timer) {
+        updateState();
+      },
+    );
+  }
+
+  AlignmentGeometry getBackgroundRadiusCenter(int condition) {
+    if (condition % 2 == 0) {
+      return Alignment.topCenter;
+    } else {
+      return Alignment.bottomCenter;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    int animCondition = animationIndex % 2;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: AnimatedBuilder(
         animation: opacityAnimation,
-        builder: (context, child) => Container(
-          decoration: const BoxDecoration(
+        builder: (context, child) => AnimatedContainer(
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 3500),
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: [
-                AppColors.surfaceFocused,
-                AppColors.surface,
+                backgroundColors[animCondition],
+                animCondition == 0 ? backgroundColors[1] : backgroundColors[0],
               ],
             ),
           ),
@@ -80,7 +116,7 @@ class _AuthenticationPageState extends State<AuthenticationPage>
                       showOptions: false,
                       showProfilePicture: false,
                     ),
-                    Expanded(
+                    Flexible(
                       child: SignInArea(),
                     ),
                   ],

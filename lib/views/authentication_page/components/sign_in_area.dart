@@ -39,13 +39,14 @@ class _SignInAreaState extends State<SignInArea> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // ignore: prefer_const_constructors
                 Text.rich(
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.textPrimary,
                     height: 1.5,
                     fontSize: AppFontSize.normal,
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text:
                         "Sign-in with your existent account or create a new one to start",
                   ),
@@ -60,7 +61,7 @@ class _SignInAreaState extends State<SignInArea> {
                 AppInput(
                   focusNode: passwordFocusNode,
                   placeholder: "Password",
-                  inputType: InputType.TEXT,
+                  inputType: InputType.PASSWORD,
                 ),
                 const FormSeparator(size: SeparatorSize.FAR),
                 const FullWideButton(),
@@ -79,12 +80,12 @@ class _SignInAreaState extends State<SignInArea> {
           fillColor: AppColors.brilhantSecondarySwatch,
           splashColor: AppColors.brilhantSecondarySwatchFocused,
           onPressed: () {
-            print("haha");
+            print("OnPressed");
           },
           child: SizedBox(
             width: screenWidth,
             child: Column(
-              children: [
+              children: const [
                 FormSeparator(size: SeparatorSize.NORMAL),
                 Text.rich(
                   style: TextStyle(

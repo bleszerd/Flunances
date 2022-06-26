@@ -2,17 +2,24 @@
 
 import 'package:flunances/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppInputController {
   ValueNotifier<LinearGradient?> fieldStateGradient = ValueNotifier(null);
   ValueNotifier<Widget?> suffixIcon = ValueNotifier(null);
   ValueNotifier<Color> hintColor = ValueNotifier(AppColors.secondarySwatch);
+  ValueNotifier<bool> showPassword = ValueNotifier(false);
 
   FieldState? fieldState = FieldState.UNTOUCHED;
-  InputType inputType = InputType.TEXT;
+  final InputType inputType;
+  final FocusNode focusNode;
 
-  AppInputController() {
+  AppInputController({
+    this.inputType = InputType.TEXT,
+    required this.focusNode,
+  }) {
     _handleSoftComponentUpdate([
+      ComponentUpdateSchema.GRADIENT_DECORATION,
       ComponentUpdateSchema.GRADIENT_DECORATION,
     ]);
   }
@@ -50,6 +57,21 @@ class AppInputController {
         break;
       case FieldState.ERROR:
         icon = const Icon(Icons.error_outline, color: AppColors.error);
+        break;
+      case FieldState.UNFOCUSED:
+        break;
+      case FieldState.UNTOUCHED:
+        if (inputType == InputType.PASSWORD && focusNode.hasFocus) {
+          icon = showPassword.value
+              ? const FaIcon(
+                  FontAwesomeIcons.eyeSlash,
+                  color: AppColors.white,
+                )
+              : const FaIcon(
+                  FontAwesomeIcons.eye,
+                  color: AppColors.white,
+                );
+        }
         break;
       default:
     }
@@ -122,6 +144,26 @@ class AppInputController {
           updateFieldState(FieldState.ERROR);
         }
         break;
+      case InputType.PASSWORD:
+        if (value.trim() != "") {
+          updateFieldState(FieldState.SUCCESS);
+        } else {
+          updateFieldState(FieldState.ERROR);
+        }
+        break;
+      default:
+    }
+  }
+
+  void handleIconOnTap() {
+    switch (inputType) {
+      case InputType.PASSWORD:
+        showPassword.value = showPassword.value ? false : true;
+
+        _handleSoftComponentUpdate([
+          ComponentUpdateSchema.SUFFIX_ICON,
+        ]);
+        break;
       default:
     }
   }
@@ -129,12 +171,15 @@ class AppInputController {
 
 enum FieldState {
   UNTOUCHED,
+  UNFOCUSED,
   SUCCESS,
+  PASSWORD_FOCUSED_SHOW,
   ERROR,
 }
 
 enum InputType {
   TEXT,
+  PASSWORD,
 }
 
 enum ComponentUpdateSchema {
