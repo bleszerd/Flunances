@@ -1,0 +1,40 @@
+name: App Lint & Release
+on: push
+jobs:
+  app-lint-release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: "Draft Github Release"
+        id: release
+        uses: rymndhng/release-on-push-action@master
+        with:
+          # minor | major | patch | norelease
+          bump_version_scheme: minor
+          tag_prefix: v
+
+      - name: Repository Checkout
+        uses: actions/checkout@v2
+
+      - name: Java Setup
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Flutter Lint & Build
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter build apk
+
+      - name: Write Relase
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          tag: ${{ steps.release.outputs.version }}
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.TOKEN }}
